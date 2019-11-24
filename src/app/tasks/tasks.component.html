@@ -1,0 +1,41 @@
+  <div class="columns">
+  <div class="column is-one-sixth"></div>
+  <div class="column is-two-thirds">
+    <h3><strong>ADD TASKS HERE:</strong></h3>
+    <form #tasks="ngForm" class="" (ngSubmit)="onSubmit(tasks)">
+      <div class="columns">
+        <div class="column is-two-thirds">
+          <input class="input"
+                 type="text"
+                 placeholder="example: wash dishes"
+                 name="task"
+                 ngModel>
+        </div>
+        <div class="is-one-third">
+          <button class="button is-primary" type="submit">ADD</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="column is-one-sixth"></div>
+  </div>
+  <hr>
+  <div class="columns">
+    <div class="column is-one-sixth"></div>
+    <div class="column is-two-thirds">
+      <div class="card">
+        <div class="card-header">
+          <p class="card-header-title">
+            Your Tasks:
+          </p>
+        </div>
+        <div class="card-content">
+          <ul *ngFor="let task of taskets">
+            <li>{{ task.task }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="column is-one-sixth"></div>
+  </div>
+
