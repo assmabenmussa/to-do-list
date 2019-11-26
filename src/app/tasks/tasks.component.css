@@ -4,3 +4,13 @@
 body{
     margin-top: 20px;
 }
+.strike{
+    text-decoration: line-through;
+}
+input[type=checkbox]{
+    margin-top: 6px;
+}
+
+.p-r{
+    margin-right: 5px;
+}

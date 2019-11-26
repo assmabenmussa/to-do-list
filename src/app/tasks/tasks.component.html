@@ -1,41 +1,86 @@
-  <div class="columns">
-  <div class="column is-one-sixth"></div>
+<div class="columns is-centered"> 
   <div class="column is-two-thirds">
     <h3><strong>ADD TASKS HERE:</strong></h3>
-    <form #tasks="ngForm" class="" (ngSubmit)="onSubmit(tasks)">
+    <quill-editor>
+      <form #tasks="ngForm" (ngSubmit)="onSubmit(tasks)">
       <div class="columns">
         <div class="column is-two-thirds">
+          {{ model | json }}
           <input class="input"
-                 type="text"
-                 placeholder="example: wash dishes"
-                 name="task"
-                 ngModel>
+                type="text"
+                placeholder="example: wash dishes"
+                name="task"
+                ngModel>
+          <input class="input"
+                type="text"
+                placeholder="description"
+                name="description"
+                ngModel>
         </div>
         <div class="is-one-third">
           <button class="button is-primary" type="submit">ADD</button>
         </div>
       </div>
     </form>
+    </quill-editor>
+    
   </div>
-  <div class="column is-one-sixth"></div>
-  </div>
-  <hr>
-  <div class="columns">
-    <div class="column is-one-sixth"></div>
-    <div class="column is-two-thirds">
-      <div class="card">
-        <div class="card-header">
-          <p class="card-header-title">
-            Your Tasks:
-          </p>
-        </div>
-        <div class="card-content">
+</div>
+
+<hr>
+
+<div class="columns is-centered">
+  <div class="column is-two-thirds">
+    <div class="card">
+      <div class="card-header">
+        <p class="card-header-title">
+          Your Tasks:
+        </p>
+      </div>
+      <div *ngIf="taskets.length < 1" class="card-content">
+        <p>
+          You have no tasks!
+        </p>
+      </div>
+      <div *ngIf="taskets" class="card-content">
           <ul *ngFor="let task of taskets">
-            <li>{{ task.task }}</li>
+            <div class="columns ">
+              <input  [(ngModel)]="task.checked"
+                      (change)="saveTaskets()"
+                      class="is-pulled-left p-r" 
+                      type="checkbox" 
+                      name="checkbox">           
+              <li class="strikethrough ">{{ task.task }} - {{ task.description }}</li> 
+              {{task | json}}
+            </div>
+            <hr>
           </ul>
         </div>
-      </div>
     </div>
-    <div class="column is-one-sixth"></div>
   </div>
+</div>
 
+<div class="columns is-centered">
+  <div class="column is-two-thirds">
+    <div class="card">
+      <form #tasksForm="ngForm" (ngSubmit)="submitExampleForm(tasksForm)">
+        <input  type="text"
+                class="input"
+                placeholder="name"
+                name="name"
+                ngModel required>
+        <input  type="text"
+                class="input"
+                placeholder="description"
+                name="description"
+                ngModel required>
+        <input  type="checkbox"
+                class="checkbox"
+                placeholder="human"
+                name="human"
+                ngModel>
+        <button class="button is-primary" [disabled]="!tasksForm.valid" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
