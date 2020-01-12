@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { TasksService } from '../services/tasks.service';
+import { ObservableArray } from 'rxjs-array';
 
 @Component({
   selector: 'app-tasks',
@@ -9,46 +10,60 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export class TasksComponent implements OnInit {
 
-  model = {
-    task: '',
-    checked: false,
-  };
+  constructor (public tasksService : TasksService) {}
   
-  taskets: any[] = [];
+  quillConfig = {
+    toolbar:  ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', { 'list': 'bullet' },
+     { 'list': 'ordered'},{ 'indent': '-1'}, { 'indent': '+1' },
+      {'direction': 'rtl'}, { 'size': ['small', false, 'large', 'huge'] }, { 'align': [] }]
+  };
+
+  taskList: any[] = [];
+  check: Boolean
+  tests: any[] = ['item 1', 'item 2', 'item 3', 'item 4'];
 
   ngOnInit() {
-  if(localStorage.getItem('TASK')){
-      this.taskets = JSON.parse(localStorage.getItem('TASK'));
-      console.log(this.taskets);
-    }
+  // if(localStorage.getItem('TASK')){
+  //     this.task = JSON.parse(localStorage.getItem('TASK'));
+  //     console.log(this.task);
+  //   }
+ 
+  this.tasksService.getAll()
+    .subscribe(res => {
+      console.log("Response from getAll function: ", res)
+      this.taskList = res
+      console.log("this.task.push(res): ", this.taskList)
+    })
   }
 
   onSubmit(formdata){
     console.log("Specific task: ", formdata.value);
-    if(this.taskets.length < 1){
-      this.taskets = [{
-        task: formdata.value.task,
-        description: formdata.value.description,
-        checked: false,
+    if(this.taskList.length < 1){
+      this.taskList = [{
+        task: formdata.value.task
       }];
     } else {
-      this.taskets.push({
-        task: formdata.value.task,
-        description: formdata.value.description,
-        checked: false,
-      });
+      this.taskList.push({
+        task: formdata.value.task
+      })
     }
     // task.reset();
-    console.log("Tasks array: ", this.taskets);
-    this.saveTaskets();
+    console.log("Tasks array: ", this.taskList);
+    // this.savetask();
+    this.tasksService.postSpecific(formdata.value)
+      .subscribe(res => {
+        console.log("Response from tasks service: ", res)
+      });
+    formdata.reset();
   }
 
-  saveTaskets(){
-    localStorage.setItem('TASK', JSON.stringify(this.taskets));
+  savetask(){
+    localStorage.setItem('TASK', JSON.stringify(this.taskList));
   }
   submitExampleForm(formdata){
     console.log("submit Example Form value: ", formdata.value);
     formdata.reset();
   }
+
   
 }
