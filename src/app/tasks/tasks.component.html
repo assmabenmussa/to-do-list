@@ -37,14 +37,13 @@
                       class="is-pulled-left p-r" 
                       type="checkbox" 
                       name="checkbox">           
-              <li [innerHTML]="tasket" [class]="tasket.checked ? 'strike' : ''"> {{ tasket }}
+              <li [class]="tasket.checked ? 'strike' : ''"> {{ tasket }}
               </li> 
-              <i class="fas fa-trash is-pulled-right"></i>
             </div>
+            <i  (click)='deleteTask(tasket.id)' class="fas fa-trash is-pulled-right" style="margin-top:-25px;"></i>
             <hr>
           </ul>
         </div>
     </div>
   </div>
 </div>
-<!-- for reformulating quilleditor html text: [innerHTML]="tasket"  -->

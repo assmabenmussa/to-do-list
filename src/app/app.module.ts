@@ -7,6 +7,18 @@ import { TasksComponent } from './tasks/tasks.component';
 import { QuillModule } from "ngx-quill";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
+import { RouterModule, Routes } from '@angular/router';
+import { TasksService } from './services/tasks.service';
+import { AuthGuard } from './services/authguard';
+
+const appRoutes: Routes = [
+  {
+    path: 'login', component: AuthComponent
+  },
+  {
+    path: 'dashboard', component: TasksComponent
+  }
+]
 
 @NgModule({
   declarations: [
@@ -19,7 +31,8 @@ import { AuthComponent } from './auth/auth.component';
     BrowserModule,
     FormsModule,
     QuillModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

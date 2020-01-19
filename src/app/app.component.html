@@ -1,5 +1,5 @@
-<app-navbar></app-navbar>
-<body>
-  <app-tasks></app-tasks>
+<app-navbar *ngIf="authService.isLoggedIn()"></app-navbar>
+<body [class]="authService.isLoggedIn() ? 'body-margin': ''">
+  <router-outlet></router-outlet>
 </body>
 

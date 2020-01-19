@@ -65,5 +65,11 @@ export class TasksComponent implements OnInit {
     formdata.reset();
   }
 
+  deleteTask(id){
+    this.tasksService.delete(id)
+      .subscribe(x => {
+        console.log("Output from delete route coming in from server: ", x)
+      })
+  }
   
 }

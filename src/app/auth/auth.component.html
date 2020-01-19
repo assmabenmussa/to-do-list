@@ -3,12 +3,17 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-6-widescreen">
-            <form action="" class="box">
-              <h1 class="title is-1 has-text-centered has-text-dark">Sooma Pr<i class="fas fa-clipboard-list extra-small"></i>d</h1>
+            <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" class="box">
+              <h1 class="title is-1 has-text-centered has-text-dark">ION Pr<i class="fas fa-clipboard-list extra-small"></i>d</h1>
               <div class="field">
                 <label for="" class="label">Email</label>
                 <div class="control has-icons-left">
-                  <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                  <input type="email"
+                         name="email"
+                         ngModel
+                         placeholder="e.g. sooma@iontel.ly" 
+                         class="input" 
+                         required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope"></i>
                   </span>
@@ -17,7 +22,12 @@
               <div class="field">
                 <label for="" class="label">Password</label>
                 <div class="control has-icons-left">
-                  <input type="password" placeholder="*******" class="input" required>
+                  <input type="password" 
+                         name="password"
+                         ngModel
+                         placeholder="*******" 
+                         class="input" 
+                         required>
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
@@ -30,7 +40,7 @@
                 </label>
               </div>
               <div class="has-addons is-centered buttons">
-                <button class="button is-centered">
+                <button type="submit" [disabled]="!authForm.valid" class="button is-centered">
                   Login
                 </button>
               </div>

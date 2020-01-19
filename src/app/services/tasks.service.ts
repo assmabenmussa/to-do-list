@@ -19,4 +19,8 @@ export class TasksService {
   public getAll(){
     return this.http.get<any[]>(`${this.url}/task`)
   }
+
+  public delete(id){
+    return this.http.delete(`${this.url}/task/${id}`)
+  }
 }
